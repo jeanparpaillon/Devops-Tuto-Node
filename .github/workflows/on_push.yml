@@ -29,13 +29,14 @@ jobs:
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
         run:
+          npm set registery="$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/$ARTIFACTORY_USERNAME:$ARTIFACTORY_PASSWORD"
           #npm login --registry=$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/ --auth-type=web
-          echo "machine $ARTIFACTORY_URL login $ARTIFACTORY_USERNAME password $ARTIFACTORY_PASSWORD" > ~/.netrc
+          #echo "machine $ARTIFACTORY_URL login $ARTIFACTORY_USERNAME password $ARTIFACTORY_PASSWORD" > ~/.netrc
 
       - name: Push to artifactory
         env:
           ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
           NPM_CONFIG_TOKEN: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: npm publish --registry $ARTIFACTORY_URL/artifactory/api/npm/paris-npm/
+        run: npm publish #--registry $ARTIFACTORY_URL/artifactory/api/npm/paris-npm/
           #|
           #curl -u "$ARTIFACTORY_USERNAME":"$ARTIFACTORY_PASSWORD" \ -T . \ "$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/akram_app"
