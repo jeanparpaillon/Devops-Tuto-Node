@@ -36,4 +36,4 @@ jobs:
           ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
         run:
           |
-          curl -u $ARTIFACTORY_USERNAME:$ARTIFACTORY_PASSWORD \ -T . \ "$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/akram_app"
+          curl -u "$ARTIFACTORY_USERNAME":"$ARTIFACTORY_PASSWORD" \ -T . \ "$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/akram_app"
