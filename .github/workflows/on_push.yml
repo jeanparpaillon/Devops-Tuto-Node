@@ -1,0 +1,38 @@
+name: Build and push nodejs app to artifactory
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Archive the app
+        run: tar -czf akram_app.tar.gz .
+
+      - name: Configure artifactory
+        env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run:
+          echo "machine artifactory.example login $ARTIFACTORY_USERNAME password $ARTIFACTORY_PASSWORD" > ~/.netrc
+
+      - name: Push to artifactory
+        env:
+          ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
+        run:
+          |
+          curl -u $ARTIFACTORY_USERNAME:$ARTIFACTORY_PASSWORD \ -T ./akram_app.tar.gz \ "$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/akram_app.tar.gz"
