@@ -29,9 +29,13 @@ jobs:
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
         run:
+          |
           #npm set registery="${{ secrets.ARTIFACTORY_URL }}/artifactory/api/npm/paris-npm/:_authToken${{ secrets.ARTIFACTORY_PASSWORD }}"
           #npm login --registry=$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/ --auth-type=web
-          echo "email = akram.moumna@gmail.com\nalways-auth = true\nregistry=https://trialk033s3.jfrog.io/artifactory/api/npm/paris-npm/\n//trialk033s3.jfrog.io/artifactory/api/npm/paris-npm/:_authToken=cmVmdGtuOjAxOjE3NjYwNjg4NzE6RHUzSFZ0b3lyQUIyRlZjUnJGSGY3Q2U0RUps" > ~/.npmrc
+          echo "email = akram.moumna@gmail.com
+                always-auth = true
+                registry=https://trialk033s3.jfrog.io/artifactory/api/npm/paris-npm/
+                //trialk033s3.jfrog.io/artifactory/api/npm/paris-npm/:_authToken=cmVmdGtuOjAxOjE3NjYwNjg4NzE6RHUzSFZ0b3lyQUIyRlZjUnJGSGY3Q2U0RUps" > ~/.npmrc
 
       - name: Push to artifactory
         env:
