@@ -20,19 +20,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Archive the app
-        run: tar -czf akram_app.tar.gz .
+     # - name: Archive the app
+      #  run: tar -czf akram_app.tar.gz .
 
       - name: Configure artifactory
         env:
           ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
         run:
-          echo "machine artifactory.example login $ARTIFACTORY_USERNAME password $ARTIFACTORY_PASSWORD" > ~/.netrc
+          echo "machine $ARTIFACTORY_URL login $ARTIFACTORY_USERNAME password $ARTIFACTORY_PASSWORD" > ~/.netrc
 
       - name: Push to artifactory
         env:
           ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
         run:
           |
-          curl -u $ARTIFACTORY_USERNAME:$ARTIFACTORY_PASSWORD \ -T ./akram_app.tar.gz \ "$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/akram_app.tar.gz"
+          curl -u $ARTIFACTORY_USERNAME:$ARTIFACTORY_PASSWORD \ -T . \ "$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/akram_app"
