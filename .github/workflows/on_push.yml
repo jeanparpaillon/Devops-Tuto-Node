@@ -16,7 +16,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          registry-url: ${{ secrets.ARTIFACTORY_URL }}
 
       - name: Install dependencies
         run: npm install
@@ -36,6 +35,7 @@ jobs:
       - name: Push to artifactory
         env:
           ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
+          NPM_CONFIG_TOKEN: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: npm publish --registry $ARTIFACTORY_URL/artifactory/api/npm/paris-npm/
           #|
           #curl -u "$ARTIFACTORY_USERNAME":"$ARTIFACTORY_PASSWORD" \ -T . \ "$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/akram_app"
