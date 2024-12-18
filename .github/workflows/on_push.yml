@@ -29,14 +29,14 @@ jobs:
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
         run:
-          npm set registery="${{ secrets.ARTIFACTORY_URL }}/artifactory/api/npm/paris-npm/:_authToken${{ secrets.ARTIFACTORY_PASSWORD }}"
+          #npm set registery="${{ secrets.ARTIFACTORY_URL }}/artifactory/api/npm/paris-npm/:_authToken${{ secrets.ARTIFACTORY_PASSWORD }}"
           #npm login --registry=$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/ --auth-type=web
-          #echo "machine $ARTIFACTORY_URL login $ARTIFACTORY_USERNAME password $ARTIFACTORY_PASSWORD" > ~/.netrc
+          echo "email = akram.moumna@gmail.com\nalways-auth = true\nregistry=https://trialk033s3.jfrog.io/artifactory/api/npm/paris-npm/\n//trialk033s3.jfrog.io/artifactory/api/npm/paris-npm/:_authToken=cmVmdGtuOjAxOjE3NjYwNjg4NzE6RHUzSFZ0b3lyQUIyRlZjUnJGSGY3Q2U0RUps" > ~/.npmrc
 
       - name: Push to artifactory
         env:
           ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
           NPM_CONFIG_TOKEN: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: npm publish #--registry $ARTIFACTORY_URL/artifactory/api/npm/paris-npm/
+        run: npm publish --registry $ARTIFACTORY_URL/artifactory/api/npm/paris-npm/
           #|
           #curl -u "$ARTIFACTORY_USERNAME":"$ARTIFACTORY_PASSWORD" \ -T . \ "$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/akram_app"
