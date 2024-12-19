@@ -34,9 +34,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Configure artifactory
-        run: |
-          echo "email = ${{ env.NPM_USER }}
-                always-auth = true
-                registry=https://${{ env.NPM_REGISTRY }}
-                //${{ env.NPM_REGISTRY }}:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4.1.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SQ_TOKEN }}
