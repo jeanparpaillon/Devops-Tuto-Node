@@ -31,27 +31,12 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
-        continue-on-error: true
-        run: npm list
-
       - name: Install dependencies
         run: npm install
 
       - name: Configure artifactory
-        env:
-          ARTIFACTORY_USER_EMAIL: ${{ secrets.ARTIFACTORY_USER_EMAIL }}
-          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-          ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
-        run:
-          |
-          echo "email = $ARTIFACTORY_USER_EMAIL
+        run: |
+          echo "email = ${{ env.NPM_USER }}
                 always-auth = true
-                registry=https://$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/
-                //$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/:_authToken=$ARTIFACTORY_PASSWORD" > ~/.npmrc
-
-      - name: Push to artifactory
-        env:
-          ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
-        run: npm publish --registry https://$ARTIFACTORY_URL/artifactory/api/npm/paris-npm/
+                registry=https://${{ env.NPM_REGISTRY }}
+                //${{ env.NPM_REGISTRY }}:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
