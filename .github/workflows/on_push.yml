@@ -21,8 +21,6 @@ jobs:
         with:
             oidc-provider-name: setup-jfrog-cli
 
-      - run: jf rt ping
-
       # - run: |
       #     jf rt download "Devops-Tuto-Node/artifacts/*" local-dir/
       #     jf rt upload "local-dir/*" Devops-Tuto-Node/my-artifacts/
@@ -56,4 +54,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SQ_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: jf rt build-publish
+      - run: |
+          jf rt bce
+          jf rt bag
+          jf rt bp
+      
