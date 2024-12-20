@@ -54,6 +54,19 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SQ_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - uses: actions/checkout@v4
+        with:
+          repository: 'jfrog/jfrog-integrations'
+          path: ./jfrog-integrations
+        
+      - name: Integration SonarQube / RT
+        # env:
+        #   ARTIFACTORY_USER: 
+        #   ARTIFACTORY_APIKEY:
+        #   ARTIFACTORY_URL:
+        #   ARTIFACTORY_REPO:
+        run: ./jfrog-integrations/artifactory-sonar.sh
+
       - run: |
           jf rt bce
           jf rt bag
