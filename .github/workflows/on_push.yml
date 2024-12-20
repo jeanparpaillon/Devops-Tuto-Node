@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: 
       id-token: write
+    env:
+      SONAR_REPORT_TASK_FILE: ./.scannerwork/report-task.txt
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -20,11 +22,6 @@ jobs:
             JF_ENV_1: ${{ secrets.JF_SECRET_ENV_1 }}
         with:
             oidc-provider-name: setup-jfrog-cli
-
-      # - run: |
-      #     jf rt download "Devops-Tuto-Node/artifacts/*" local-dir/
-      #     jf rt upload "local-dir/*" Devops-Tuto-Node/my-artifacts/
-      #     jf rt build-publish
 
       - name: Set up nodejs
         uses: actions/setup-node@v3
@@ -54,9 +51,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SQ_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: |
-          find . -name report-task.txt
-          jf rt u ./sonar-report-task.txt paris-npm
+      - name: Upload build infos
+        run: |
+          jf rt u ${SONAR_REPORT_TASK_FILE} paris-npm
           jf rt bce
           jf rt bag
           jf rt bp
