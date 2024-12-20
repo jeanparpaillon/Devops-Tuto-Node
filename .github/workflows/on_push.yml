@@ -8,9 +8,25 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions: 
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - uses: jfrog/setup-jfrog-cli@v4
+        env:
+            JF_URL: https://trialk033s3.jfrog.io 
+            JF_ENV_1: ${{ secrets.JF_SECRET_ENV_1 }}
+        with:
+            oidc-provider-name: setup-jfrog-cli
+
+      - run: jf rt ping
+
+      # - run: |
+      #     jf rt download "Devops-Tuto-Node/artifacts/*" local-dir/
+      #     jf rt upload "local-dir/*" Devops-Tuto-Node/my-artifacts/
+      #     jf rt build-publish
 
       - name: Set up nodejs
         uses: actions/setup-node@v3
