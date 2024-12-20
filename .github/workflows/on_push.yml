@@ -55,3 +55,5 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SQ_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: jf rt build-publish
