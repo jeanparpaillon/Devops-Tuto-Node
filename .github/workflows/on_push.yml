@@ -65,9 +65,7 @@ jobs:
         #   ARTIFACTORY_APIKEY:
         #   ARTIFACTORY_URL:
         #   ARTIFACTORY_REPO:
-        run: |
-          find jfrog-integrations
-          ./jfrog-integrations/artifactory-sonar.sh
+        run: jfrog-integrations/sonarqube/artifactory/artifactory-sonar.sh
 
       - run: |
           jf rt bce
