@@ -52,6 +52,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v4.1.0
         env:
           SONAR_TOKEN: ${{ secrets.SQ_TOKEN }}
+          SONARQUBE_SCANNER_REPORTTASKFILE: ./sonar-report-task.txt
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v4
@@ -59,15 +60,8 @@ jobs:
           repository: 'jfrog/jfrog-integrations'
           path: ./jfrog-integrations
         
-      - name: Integration SonarQube / RT
-        # env:
-        #   ARTIFACTORY_USER: 
-        #   ARTIFACTORY_APIKEY:
-        #   ARTIFACTORY_URL:
-        #   ARTIFACTORY_REPO:
-        run: jfrog-integrations/sonarqube/artifactory/artifactory-sonar.sh
-
       - run: |
+          jf rt u ./sonar-report-task.txt
           jf rt bce
           jf rt bag
           jf rt bp
