@@ -54,8 +54,8 @@ jobs:
 
       - name: Collect SonarQube report infos
         run: |
-          echo "SONAR_CE_TASK_ID=$(awk -F '=' '/^ceTaskId/ { print $2 }' ${SONAR_REPORT_TASK_FILE})" >> $GITHUB_ENV
-          echo "SONAR_CE_TASK_URL=$(awk -F '=' '/^ceTaskUrl/ { print $2 }' ${SONAR_REPORT_TASK_FILE})" >> $GITHUB_ENV          
+          echo "SONAR_CE_TASK_ID=$(cat ${SONAR_REPORT_TASK_FILE} | awk -F '=' '/^ceTaskId/' | sed 's/^[^=]*=//')" >> $GITHUB_ENV
+          echo "SONAR_CE_TASK_URL=$(cat ${SONAR_REPORT_TASK_FILE} | awk -F '=' '/^ceTaskUrl/' | sed 's/^[^=]*=//')" >> $GITHUB_ENV
 
       - name: Upload build infos
         run: |
