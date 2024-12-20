@@ -52,7 +52,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Collect SonarQube report infos
-        run: cat ${SONAR_REPORT_TASK_FILE}
+        run: |
+          echo "SONAR_CE_TASK_ID=$(awk -F '=' '/^ceTaskId/ { print $2 }' ${SONAR_REPORT_TASK_FILE})" >> $GITHUB_ENV
+          echo "SONAR_CE_TASK_URL=$(awk -F '=' '/^ceTaskUrl/ { print $2 }' ${SONAR_REPORT_TASK_FILE})" >> $GITHUB_ENV          
 
       - name: Upload build infos
         run: |
