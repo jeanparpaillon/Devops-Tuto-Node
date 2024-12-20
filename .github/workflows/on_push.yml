@@ -51,9 +51,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SQ_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Collect SonarQube report infos
+        run: cat ${SONAR_REPORT_TASK_FILE}
+
       - name: Upload build infos
         run: |
-          jf rt u ${SONAR_REPORT_TASK_FILE} paris-npm
           jf rt bce
           jf rt bag
           jf rt bp
