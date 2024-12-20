@@ -55,13 +55,8 @@ jobs:
           SONARQUBE_SCANNER_REPORTTASKFILE: ./sonar-report-task.txt
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@v4
-        with:
-          repository: 'jfrog/jfrog-integrations'
-          path: ./jfrog-integrations
-        
       - run: |
-          jf rt u ./sonar-report-task.txt
+          jf rt u ./sonar-report-task.txt paris-npm
           jf rt bce
           jf rt bag
           jf rt bp
